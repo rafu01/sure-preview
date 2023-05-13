@@ -1,7 +1,6 @@
 package com.sure.surepreview.service;
 
 import com.sure.surepreview.dto.PreviewDto;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,16 +11,21 @@ import org.springframework.stereotype.Service;
 public class ParseLinkServiceImpl implements ParseLinkService{
 
     @Override
-    @SneakyThrows
     public PreviewDto parseLink(String link){
-        var document = Jsoup.connect(link)
-                .userAgent("Mozilla")
-                .followRedirects(true).get();
-        return PreviewDto.builder()
-                .title(getTitle(document))
-                .description(getDescription(document))
-                .image(getImage(document))
-                .build();
+        try {
+            var document = Jsoup.connect(link)
+                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36")
+                    .followRedirects(true).get();
+            return PreviewDto.builder()
+                    .title(getTitle(document))
+                    .description(getDescription(document))
+                    .image(getImage(document))
+                    .build();
+        }
+        catch (Exception exception){
+            log.error("Error Fetching Url : {}", link);
+        }
+        return PreviewDto.builder().build();
     }
 
     private String getTitle(Document document){
