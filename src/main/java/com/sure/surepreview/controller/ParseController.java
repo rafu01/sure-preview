@@ -1,5 +1,6 @@
 package com.sure.surepreview.controller;
 
+import com.sure.surepreview.dto.PreviewDto;
 import com.sure.surepreview.service.ParseLinkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ public class ParseController {
 
     @GetMapping("/get")
     @ResponseBody
-    public String parseLink(@RequestParam String link){
+    public PreviewDto parseLink(@RequestParam String link){
         return parseLinkService.parseLink(link);
     }
 }

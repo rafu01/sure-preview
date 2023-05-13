@@ -1,8 +1,10 @@
 package com.sure.surepreview.service;
 
+import com.sure.surepreview.dto.PreviewDto;
+
 import java.io.IOException;
 
 public interface ParseLinkService {
 
-    String parseLink(String link);
+    PreviewDto parseLink(String link);
 }
